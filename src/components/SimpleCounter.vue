@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, withDefaults } from 'vue'
 import fetchCount from '../services/fetchCount'
+import EmittingBtn from './EmittingBtn.vue'
 
 interface Props {
   limit: number
@@ -22,15 +23,8 @@ const addCount = () => {
     }
   }
 }
-
-const AddSpecificNumber = (num: number) => {
-  if (count.value !== null) {
-    if (count.value <= props.limit) {
-      count.value += num
-    } else {
-      alert(props.alertMessage)
-    }
-  }
+const resetCount = () => {
+  count.value = 0
 }
 
 onMounted(() => {
@@ -42,6 +36,5 @@ onMounted(() => {
 
 <template>
   <p>Count: {{ count }}</p>
-  <button @click="addCount">ADD</button>
-  <button @click="AddSpecificNumber(3)">ADD 3</button>
+  <EmittingBtn @add-count="addCount" @reset-count="resetCount" />
 </template>
